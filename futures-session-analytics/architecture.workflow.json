@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {"title": "Futures Session Analytics Workflow", "output": "futures_session_analytics/workflow.html", "quality_profile": "showcase"},
+  "lanes": [
+    {"id":"source","label":"Market data"},
+    {"id":"research","label":"Research pipeline"},
+    {"id":"output","label":"Reader output"}
+  ],
+  "phases": [
+    {"id":"prepare","label":"Prepare","fromCol":0,"toCol":1},
+    {"id":"analyze","label":"Analyze","fromCol":2,"toCol":4,"variant":"emphasis"},
+    {"id":"publish","label":"Publish","fromCol":5,"toCol":5}
+  ],
+  "mainPath":["download","sessions","diagnostics","ols","dashboard"],
+  "nodes":[
+    {"id":"download","lane":"source","col":0,"type":"external","label":"Yahoo Finance","sublabel":"hourly ES bars"},
+    {"id":"sessions","lane":"source","col":1,"width":110,"type":"backend","label":"Pair sessions","sublabel":"RTH + overnight"},
+    {"id":"diagnostics","lane":"research","col":2,"width":110,"type":"backend","label":"Diagnostics","sublabel":"rolling + buckets"},
+    {"id":"ols","lane":"research","col":4,"width":110,"type":"backend","label":"In-sample OLS","sublabel":"signal + equity"},
+    {"id":"csv","lane":"output","col":3,"type":"database","label":"CSV evidence","sublabel":"raw + sessions"},
+    {"id":"dashboard","lane":"output","col":5,"type":"frontend","label":"HTML","sublabel":"interactive"}
+  ],
+  "edges":[
+    {"from":"download","to":"sessions"},
+    {"from":"sessions","to":"diagnostics"},
+    {"from":"sessions","to":"csv","variant":"dashed"},
+    {"from":"diagnostics","to":"ols"},
+    {"from":"ols","to":"dashboard","label":"embed JSON","variant":"emphasis"}
+  ],
+  "cards":[
+    {"dot":"cyan","title":"Reproducible path","items":["Fetch hourly data","Pair RTH with the following overnight session","Write raw and paired CSV evidence"]},
+    {"dot":"amber","title":"Interpret carefully","items":["OLS is in-sample","No commissions or slippage are included","Walk-forward and out-of-sample testing are next"]}
+  ]
+}
