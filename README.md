@@ -8,6 +8,8 @@ An interactive Python research project studying whether regular trading hours (R
 
 **[Open the architecture workflow diagram →](futures-session-analytics/workflow.html)**
 
+**[Open the codebase architecture view →](futures-session-analytics/architecture.html)**
+
 The dashboard includes recent-window selectors, rolling correlations, continuation/reversal diagnostics, six signed RTH buckets, an in-sample OLS strategy, an always-long overnight benchmark, equity, and drawdown.
 
 ## Project structure
@@ -20,6 +22,7 @@ Effect-of-overnight-Futures-on-Regular-Trading-Sessions/
 └── futures-session-analytics/
     ├── index.html                     # interactive subproject dashboard
     ├── workflow.html                   # architecture diagram
+    ├── architecture.html              # presentation-style codebase map
     ├── architecture.workflow.json     # diagram specification
     ├── fetch_preprocess_data.py        # download and RTH/ON pairing
     ├── main_analysis.py                # diagnostics, OLS, equity, drawdown
@@ -66,6 +69,6 @@ flowchart LR
     I --> J[GitHub Pages]
 ```
 
-## Research limitations
+## Research scope and limitations
 
-This is an exploratory, full-sample in-sample study. OLS is fitted and evaluated on the same observations. Commissions, spreads, slippage, financing, margin, and contract-roll effects are not included. The next research step is walk-forward estimation with leakage controls, out-of-sample evaluation, realistic execution costs, and regime analysis. Results are not live performance or financial advice.
+This project is intentionally limited to a short, contained in-sample investigation of a possible RTH-to-overnight dislocation. It is not intended to establish a production trading strategy or a general market law. OLS is fitted and evaluated on the same observations. Commissions, spreads, slippage, financing, margin, and contract-roll effects are outside the scope of this prototype. Results are not live performance or financial advice.
